@@ -1,5 +1,6 @@
 import { createContext, useContext, useReducer, useEffect } from "react";
 import Question from "../components/Question";
+import { type } from "@testing-library/user-event/dist/type";
 
 const SECS_PER_QUESTION = 30;
 
@@ -87,7 +88,11 @@ function QuizProvider({ children }) {
   useEffect(function () {
     fetch("/api/server")
       .then((res) => res.json())
-      .catch((err) => console.error("Error:", err));
+      .then((data) => dispatch({ type: "dataReceived", payload: data }))
+      .catch((err) => {
+        dispatch({ type: "dataFailed" });
+        console.error("Error:", err);
+      });
   }, []);
 
   return (
