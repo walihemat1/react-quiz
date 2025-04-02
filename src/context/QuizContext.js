@@ -87,7 +87,6 @@ function QuizProvider({ children }) {
   useEffect(function () {
     fetch("/api/server")
       .then((res) => res.json())
-      .then((data) => console.log(data)) // Should log the array of questions
       .catch((err) => console.error("Error:", err));
   }, []);
 
